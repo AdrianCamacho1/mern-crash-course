@@ -1,11 +1,13 @@
-import { Container, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import { Container, SimpleGrid, Text, VStack, Button, Show, Stack } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useProductStore } from "../store/product";
 import ProductCard from "../components/ProductCard";
 
-const HomePage = () => {
+const OwnerPage = () => {
 	const { fetchProducts, products } = useProductStore();
+	const [count, setCount] = useState(0);
+	
 
 	useEffect(() => {
 		fetchProducts();
@@ -49,8 +51,16 @@ const HomePage = () => {
 						</Link>
 					</Text>
 				)}
+				      <Show when={count > 3}>
+        <div>My Content</div>
+      </Show>
+      <Button variant="outline" onClick={() => setCount(count + 1)}>
+        Value: {count}
+      </Button>
+
 			</VStack>
 		</Container>
+		
 	);
 };
-export default HomePage;
+export default OwnerPage;

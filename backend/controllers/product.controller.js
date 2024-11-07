@@ -14,6 +14,14 @@ export const getProducts = async (req, res) => {
 
 export const createProduct = async (req, res) => {
 	const product = req.body; // user will send this data
+	try {
+        // Use insertMany to insert multiple products at once
+        const newProducts = await Product.insertMany(product); 
+        res.status(201).json({ success: true, data: newProducts });
+    } catch (error) {
+        console.error("Error in Create product:", error.message);
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
 
 	if (!product.name || !product.price || !product.image) {
 		return res.status(400).json({ success: false, message: "Please provide all fields" });
